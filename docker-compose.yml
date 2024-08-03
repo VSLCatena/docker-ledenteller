@@ -18,11 +18,14 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.${PROJECT}.rule=Host(`${PROJECT_FQDN}`)"
       - "traefik.http.routers.${PROJECT}.entrypoints=${PROJECT_ENTRYPOINT}"   
-  
     container_name: ledenteller.php
     hostname: php
-    pull_policy: missing
-    image: image: php:8-apache-bullseye
+    image: 'ghcr.io/vslcatena/docker-ledenteller:latest'
+    pull_policy: if_not_present
+    build:
+      context: ./src
+      dockerfile: Dockerfile
+    environment:
       TZ: 'Europe/Amsterdam'
     restart: unless-stopped
     tty: true
