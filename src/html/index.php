@@ -21,7 +21,7 @@
 <a class="btn-lg btn-warning" href='./controls/index.php' >Invoer</a>
 
 <?php
-$filename = "./controls/data.txt";
+$filename = "./data/data.txt";
 $file = fopen($filename, "r") or die("Unable to open file!");
 $data= fread($file,filesize($filename));
 fclose($file);

@@ -5,7 +5,7 @@ body {
     -webkit-transition: 2s;
     -moz-transition: 2s;
     -o-transition: 2s;
-    background-image: url(./uploads/background.png);
+    background-image: url(./data/background.png);
    
     background-size: cover;
     background-position: top center;
