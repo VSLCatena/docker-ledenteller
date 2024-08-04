@@ -25,7 +25,7 @@ include("./password_protect.php");
 #error_reporting(E_ALL);
 #ini_set('display_errors', 1);
 
-$filename = "data.txt";
+$filename = "../data/data.txt";
 
 	if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['AantalLeden'])){
 		$start = $_POST['AantalLeden'];
@@ -41,8 +41,7 @@ $filename = "data.txt";
                 $start = $newvalue;
             }
 		//Sending form data to sql db.
-		$filename = "data.txt";
-		$file = fopen("../data/" . $filename, "w") or die("Unable to open file!");
+		$file = fopen($filename, "w") or die("Unable to open file!");
 		$txt = date_format(new DateTime,"Y-m-d H:i:s") . ";" . $start;
 		fwrite($file, $txt);
 		fclose($file);
