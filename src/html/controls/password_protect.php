@@ -79,6 +79,7 @@ define('TIMEOUT_MINUTES', (int)getenv_docker('TIMEOUT_MINUTES', 120));
 // true - timeout time from last activity, false - timeout time from login
 define('TIMEOUT_CHECK_ACTIVITY', (bool)getenv_docker('TIMEOUT_CHECK_ACTIVITY',1));
 
+
 ##################################################################
 #  SETTINGS END
 ##################################################################
