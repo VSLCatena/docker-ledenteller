@@ -1,3 +1,52 @@
+<?php include("./password_protect.php");
+if (! function_exists('getenv_docker')) {
+    function getenv_docker($env, $default)
+    {
+        if (($val = getenv($env)) !== false) {
+            return $val;
+        }
+        return $default;
+    }
+}
+#error_reporting(E_ALL);
+#ini_set('display_errors', 1);
+
+$filename = "../data/data.txt";
+
+	if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['AantalLeden'])){
+		$start = $_POST['AantalLeden'];
+		$waarde = $_POST['waarde'];
+        $newvalue = $_POST['AantalLeden'];
+			if ($waarde == "plus 1"){
+				$start = $start +1;
+			}
+			if ($waarde =="minus 1"){
+				$start = $start -1;
+			}
+            if ($waarde =="set new value"){
+                $start = $newvalue;
+            }
+		define('TZ',getenv_docker('TZ','Europe/Amsterdam'));
+		$date = new DateTimeImmutable(null, new DateTimeZone(TZ));
+		//Sending form data to db.
+		$file = fopen($filename, "w") or die("Unable to open file!");
+		$txt = date_format($date,"Y-m-d H:i:s") . ";" . $start;
+		fwrite($file, $txt);
+		fclose($file);
+		
+		} 
+	
+	// get data from text
+	$file = fopen($filename, "rb") or die("Unable to open file!");
+	$data= fread($file,filesize($filename));
+	fclose($file);
+	$data=explode(";",$data);
+	$tijd  = $data[0]; //zet sqlresult om in var
+	$start = $data[1]; //zet sqlresult om in var		
+?>
+
+    
+    
 <html>
 
 <head>
@@ -19,53 +68,8 @@
 
 <body>
 <br>
-<a class="btn-lg btn-success" href="../index.php">Hoofdscherm</a>
-    <?php
-include("./password_protect.php");
-#error_reporting(E_ALL);
-#ini_set('display_errors', 1);
-
-$filename = "../data/data.txt";
-
-	if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['AantalLeden'])){
-		$start = $_POST['AantalLeden'];
-		$waarde = $_POST['waarde'];
-        $newvalue = $_POST['AantalLeden'];
-			if ($waarde == "plus 1"){
-				$start = $start +1;
-			}
-			if ($waarde =="minus 1"){
-				$start = $start -1;
-			}
-            if ($waarde =="set new value"){
-                $start = $newvalue;
-            }
-		//Sending form data to sql db.
-		$file = fopen($filename, "w") or die("Unable to open file!");
-		$txt = date_format(new DateTime,"Y-m-d H:i:s") . ";" . $start;
-		fwrite($file, $txt);
-		fclose($file);
-		
-		} 
-	
-	// get data from text
-	$file = fopen($filename, "rb") or die("Unable to open file!");
-	$data= fread($file,filesize($filename));
-	fclose($file);
-	$data=explode(";",$data);
-	$tijd  = $data[0]; //zet sqlresult om in var
-	$start = $data[1]; //zet sqlresult om in var		
-		
-
-?>
-
-    
-    
-    
-    
-    
+<a class="btn-lg btn-success" href="../index.php">Hoofdscherm</a>    
     <div class="container-fluid">
-
         <div class="row center input">
             <div class="col-md-4"></div>
             <div class="col-md-4">

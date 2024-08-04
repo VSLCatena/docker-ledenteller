@@ -67,17 +67,18 @@ $LOGIN_INFORMATION = array(
 
 
 // request login? true - show login and password boxes, false - password box only
-define('USE_USERNAME', (bool)getenv_docker('USE_USERNAME', false));
+define('USE_USERNAME', (bool)getenv_docker('USE_USERNAME', 0));
 
 // User will be redirected to this page after logout
-define('LOGOUT_URL', getenv_docker('LOGOUT_URL', 'about://blank'));
+define('LOGOUT_URL', getenv_docker('LOGOUT_URL', '../index.php'));
 
 // time out after NN minutes of inactivity. Set to 0 to not timeout
 define('TIMEOUT_MINUTES', (int)getenv_docker('TIMEOUT_MINUTES', 120));
 
 // This parameter is only useful when TIMEOUT_MINUTES is not zero
 // true - timeout time from last activity, false - timeout time from login
-define('TIMEOUT_CHECK_ACTIVITY', (bool)getenv_docker('TIMEOUT_CHECK_ACTIVITY',true));
+define('TIMEOUT_CHECK_ACTIVITY', (bool)getenv_docker('TIMEOUT_CHECK_ACTIVITY',1));
+
 
 ##################################################################
 #  SETTINGS END
