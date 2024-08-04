@@ -1,4 +1,13 @@
 <?php include("./password_protect.php");
+if (! function_exists('getenv_docker')) {
+    function getenv_docker($env, $default)
+    {
+        if (($val = getenv($env)) !== false) {
+            return $val;
+        }
+        return $default;
+    }
+}
 #error_reporting(E_ALL);
 #ini_set('display_errors', 1);
 
@@ -17,9 +26,11 @@ $filename = "../data/data.txt";
             if ($waarde =="set new value"){
                 $start = $newvalue;
             }
+		define('TZ',getenv_docker('TZ','Europe/Amsterdam'));
+		$date = new DateTimeImmutable(null, new DateTimeZone(TZ));
 		//Sending form data to db.
 		$file = fopen($filename, "w") or die("Unable to open file!");
-		$txt = date_format(new DateTime,"Y-m-d H:i:s") . ";" . $start;
+		$txt = date_format($date,"Y-m-d H:i:s") . ";" . $start;
 		fwrite($file, $txt);
 		fclose($file);
 		
