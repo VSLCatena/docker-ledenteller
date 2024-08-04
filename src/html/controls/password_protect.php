@@ -73,7 +73,7 @@ define('USE_USERNAME', getenv_docker('USE_USERNAME', false));
 define('LOGOUT_URL', getenv_docker('LOGOUT_URL', 'about://blank'));
 
 // time out after NN minutes of inactivity. Set to 0 to not timeout
-define('TIMEOUT_MINUTES', getenv_docker('TIMEOUT_MINUTES', 120);
+define('TIMEOUT_MINUTES', getenv_docker('TIMEOUT_MINUTES', 120));
 
 // This parameter is only useful when TIMEOUT_MINUTES is not zero
 // true - timeout time from last activity, false - timeout time from login
