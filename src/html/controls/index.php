@@ -27,7 +27,7 @@ $filename = "../data/data.txt";
                 $start = $newvalue;
             }
 		define('TZ',getenv_docker('TZ','Europe/Amsterdam'));
-		$date = new DateTimeImmutable(null, new DateTimeZone(TZ));
+		$date = new DateTimeImmutable("now", new DateTimeZone(TZ));
 		//Sending form data to db.
 		$file = fopen($filename, "w") or die("Unable to open file!");
 		$txt = date_format($date,"Y-m-d H:i:s") . ";" . $start;
