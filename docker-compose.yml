@@ -28,10 +28,10 @@ services:
     environment:
       TZ: 'Europe/Amsterdam'
       LOGIN_INFORMATION: ${LOGIN_INFORMATION:-SomePassword}
-      USE_USERNAME: ${USE_USERNAME:-false}
+      USE_USERNAME: ${USE_USERNAME:-0}
       LOGOUT_URL: ${LOGOUT_URL:-"about://blank"}
       TIMEOUT_MINUTES: ${TIMEOUT_MINUTES:-30}
-      TIMEOUT_CHECK_ACTIVITY: ${TIMEOUT_CHECK_ACTIVITY:-true}
+      TIMEOUT_CHECK_ACTIVITY: ${TIMEOUT_CHECK_ACTIVITY:-1}
     restart: unless-stopped
     tty: true
     ports:
