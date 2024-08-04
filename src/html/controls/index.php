@@ -42,7 +42,7 @@ $filename = "data.txt";
             }
 		//Sending form data to sql db.
 		$filename = "data.txt";
-		$file = fopen($filename, "w") or die("Unable to open file!");
+		$file = fopen("../data/" . $filename, "w") or die("Unable to open file!");
 		$txt = date_format(new DateTime,"Y-m-d H:i:s") . ";" . $start;
 		fwrite($file, $txt);
 		fclose($file);
