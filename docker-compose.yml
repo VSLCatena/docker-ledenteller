@@ -16,6 +16,7 @@ services:
   ledenteller.php:
     labels:
       - "traefik.enable=true"
+      - "traefik.http.routers.${PROJECT}.tls=true"
       - "traefik.http.routers.${PROJECT}.rule=Host(`${PROJECT_FQDN}`)"
       - "traefik.http.routers.${PROJECT}.entrypoints=${PROJECT_ENTRYPOINT}"   
     container_name: ledenteller.php
