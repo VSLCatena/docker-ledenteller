@@ -1,12 +1,7 @@
 
 networks:
-  net:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: '${SUBNET:-192.168.32.0/29}'
-    driver_opts:
-      com.docker.network.bridge.name: ledenteller_net
+  REVERSE_PROXY:
+    external: true
 
 volumes:
   data:
@@ -18,7 +13,11 @@ services:
       - "traefik.enable=true"
       - "traefik.http.routers.${PROJECT}.tls=true"
       - "traefik.http.routers.${PROJECT}.rule=Host(`${PROJECT_FQDN}`)"
-      - "traefik.http.routers.${PROJECT}.entrypoints=${PROJECT_ENTRYPOINT}"   
+      - "traefik.http.routers.${PROJECT}.entrypoints=${PROJECT_ENTRYPOINT}"
+      - "traefik.http.routers.${PROJECT}.tls.domains[0].main=${PROJECT_DOMAIN_MAIN}"
+      - "traefik.http.routers.${PROJECT}.tls.domains[0].sans=${PROJECT_DOMAIN_SANS}"
+      - "traefik.http.routers.${PROJECT}.tls.certresolver=${PROJECT_CERT_RESOLVER}"
+      - "traefik.http.services.${PROJECT}.loadbalancer.server.port=80"
     container_name: ledenteller.php
     hostname: php
     image: 'ghcr.io/vslcatena/docker-ledenteller:latest'
@@ -28,17 +27,17 @@ services:
       dockerfile: Dockerfile
     environment:
       TZ: 'Europe/Amsterdam'
-      LOGIN_INFORMATION: ${LOGIN_INFORMATION:-SomePassword}
+      LOGIN_INFORMATION: ${LOGIN_INFORMATION}
       USE_USERNAME: ${USE_USERNAME:-0}
       LOGOUT_URL: ${LOGOUT_URL:-"about://blank"}
       TIMEOUT_MINUTES: ${TIMEOUT_MINUTES:-30}
       TIMEOUT_CHECK_ACTIVITY: ${TIMEOUT_CHECK_ACTIVITY:-1}
     restart: unless-stopped
     tty: true
-    ports:
-      - '${PROJECT_IP:-0.0.0.0}:${PROJECT_PORT:-8128}:80'
+  #  ports:
+ #     - '${PROJECT_IP:-0.0.0.0}:${PROJECT_PORT:-8128}:80'
     volumes:
       - '/etc/localtime:/etc/localtime:ro'
       - data:/var/www/html/data
     networks:
-      - net
+      - REVERSE_PROXY
